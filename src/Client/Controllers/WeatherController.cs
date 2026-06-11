@@ -1,3 +1,4 @@
+using Geography.Application.Dtos;
 using Geography.Application.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,9 +15,7 @@ public sealed class WeatherController(IWeatherQuery weatherQuery) : ControllerBa
     {
         var result = await weatherQuery.GetCurrentWeatherAsync(request.City, ct);
         return result is null
-            ? NotFound(new { error = $"City '{request.City}' not found." })
+            ? Problem(detail: $"City '{request.City}' not found.", statusCode: StatusCodes.Status404NotFound)
             : Ok(result);
     }
 }
-
-public sealed record GetWeatherRequest(string City);

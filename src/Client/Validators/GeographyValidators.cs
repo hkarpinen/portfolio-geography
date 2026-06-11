@@ -1,5 +1,5 @@
-using Client.Controllers;
 using FluentValidation;
+using Geography.Application.Dtos;
 
 namespace Client.Validators;
 
