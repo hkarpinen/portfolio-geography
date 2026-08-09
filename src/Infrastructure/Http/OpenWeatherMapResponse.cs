@@ -11,6 +11,8 @@ internal sealed class OWMCurrentWeatherResponse
     [JsonPropertyName("wind")]       public OWMWind Wind { get; set; } = new();
     [JsonPropertyName("visibility")] public int Visibility { get; set; }
     [JsonPropertyName("coord")]      public OWMCoord Coord { get; set; } = new();
+    /// <summary>Seconds from UTC at the looked-up city, not the server.</summary>
+    [JsonPropertyName("timezone")]   public int Timezone { get; set; }
 }
 
 internal sealed class OWMCoord
@@ -22,6 +24,8 @@ internal sealed class OWMCoord
 internal sealed class OWMSys
 {
     [JsonPropertyName("country")] public string Country { get; set; } = string.Empty;
+    /// <summary>Unix seconds, UTC.</summary>
+    [JsonPropertyName("sunset")]  public long Sunset { get; set; }
 }
 
 internal sealed class OWMMain
@@ -30,6 +34,8 @@ internal sealed class OWMMain
     [JsonPropertyName("feels_like")] public double FeelsLike { get; set; }
     [JsonPropertyName("humidity")]   public int Humidity { get; set; }
     [JsonPropertyName("pressure")]   public int Pressure { get; set; }
+    [JsonPropertyName("temp_min")]   public double TempMin { get; set; }
+    [JsonPropertyName("temp_max")]   public double TempMax { get; set; }
 }
 
 internal sealed class OWMWeather
@@ -41,4 +47,6 @@ internal sealed class OWMWeather
 internal sealed class OWMWind
 {
     [JsonPropertyName("speed")] public double Speed { get; set; }
+    /// <summary>Meteorological degrees, so 0 is north and it reads clockwise.</summary>
+    [JsonPropertyName("deg")]   public int Deg { get; set; }
 }
