@@ -91,7 +91,6 @@ try
     builder.Services.AddFluentValidationAutoValidation();
     builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
-    // Problem details for standardised error responses (RFC 7807)
     builder.Services.AddProblemDetails(options =>
     {
         options.CustomizeProblemDetails = ctx =>
@@ -107,7 +106,6 @@ try
 
     var app = builder.Build();
 
-    // ProblemDetails-aware exception + status-code handling
     app.UseExceptionHandler();
     app.UseStatusCodePages();
 

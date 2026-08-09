@@ -14,7 +14,6 @@ public static class InfrastructureServiceExtensions
         services.Configure<OpenWeatherMapOptions>(
             configuration.GetSection("OpenWeatherMap"));
 
-        // Typed HttpClient — DI injects IOptions<OpenWeatherMapOptions> automatically.
         services.AddHttpClient<IWeatherQuery, OpenWeatherMapClient>();
         services.AddHttpClient<ITileProxy, TileProxyClient>();
 

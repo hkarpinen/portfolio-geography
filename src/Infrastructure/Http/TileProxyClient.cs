@@ -22,7 +22,6 @@ internal sealed class TileProxyClient(
 
         if (layer.Equals("cycling", StringComparison.OrdinalIgnoreCase))
         {
-            // CyclOSM — no API key required
             url = $"https://a.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png";
         }
         else if (OwmLayers.TryGetValue(layer, out var owmLayer))

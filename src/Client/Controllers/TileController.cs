@@ -9,7 +9,6 @@ namespace Client.Controllers;
 [AllowAnonymous]
 public sealed class TileController(ITileProxy tileProxy) : ControllerBase
 {
-    // GET /api/geography/tiles/{layer}/{z}/{x}/{y}.png
     [HttpGet("{layer}/{z:int}/{x:int}/{y:int}.png")]
     [ResponseCache(Duration = 300, Location = ResponseCacheLocation.Any)]
     public async Task<IActionResult> GetTile(
