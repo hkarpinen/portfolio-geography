@@ -23,8 +23,22 @@ internal sealed class OpenWeatherMapClient(
             parts.Add("US");
 
         var q = string.Join(",", parts);
-        var url = $"{opts.BaseUrl}/weather?q={q}&appid={opts.ApiKey}&units=metric";
+        return await ReadAsync($"{opts.BaseUrl}/weather?q={q}&appid={opts.ApiKey}&units=metric", ct);
+    }
 
+    public Task<WeatherDto?> GetCurrentWeatherAtAsync(double latitude, double longitude, CancellationToken ct = default)
+    {
+        var opts = options.Value;
+        // Invariant culture, or a comma decimal separator turns one coordinate into two
+        // query values and the reading comes back for somewhere else entirely.
+        var lat = latitude.ToString(System.Globalization.CultureInfo.InvariantCulture);
+        var lon = longitude.ToString(System.Globalization.CultureInfo.InvariantCulture);
+
+        return ReadAsync($"{opts.BaseUrl}/weather?lat={lat}&lon={lon}&appid={opts.ApiKey}&units=metric", ct);
+    }
+
+    private async Task<WeatherDto?> ReadAsync(string url, CancellationToken ct)
+    {
         var response = await http.GetAsync(url, ct);
 
         if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
