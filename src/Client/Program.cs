@@ -4,7 +4,6 @@ using Geography.Application;
 using Geography.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using Serilog;
@@ -67,16 +66,6 @@ try
             .Build();
     });
 
-    builder.Services.AddRateLimiter(options =>
-    {
-        options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
-        options.AddFixedWindowLimiter("standard", o =>
-        {
-            o.PermitLimit = 60;
-            o.Window = TimeSpan.FromMinutes(1);
-            o.QueueLimit = 0;
-        });
-    });
 
     builder.Services.AddControllers()
         .AddJsonOptions(o =>
@@ -103,7 +92,6 @@ try
     app.UseStatusCodePages();
 
     app.UseSerilogRequestLogging();
-    app.UseRateLimiter();
     app.UseAuthentication();
     app.UseAuthorization();
 
